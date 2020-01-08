@@ -35,7 +35,7 @@ Here two different comparisons could be of interest, one way more important that
 
 ### Comparisons Desired:
 Here we need to find a way to determine whether the genes WUS and LFY were really knocked out in the transformed plants. So here again two different comparisons could be of interest, one way more important that the other:
-* Transformed vs. untransformed (top priority) – compare WUS1 and WUS2 with SB-C and compare LFY1 and LFY2 with SB-C: determine whether the two target genes were knocked down.
+* Transformed vs. untransformed (top priority) – compare WUS1 and WUS2 (without galls) with SB-C (without galls) and compare LFY1 and LFY2 (without galls) with SB-C (without galls): determine whether the two target genes were knocked down.
 * Ungalled vs. galled when data available for both within the same genotype (not priority, maybe not even necessary; we can talk about this when the priority one has been completed) – compare SB-CK-G with SB-C, compare DPR-G with DPR, compare 1-G with 1, compare 2-G with 2, compare 3-G with 3, and compare 4-G with 4: determine the effect of galling on gene expression in different genotypes.
 
 ### Work in Progress:

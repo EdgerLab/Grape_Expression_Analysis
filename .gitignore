@@ -1,8 +1,10 @@
 # Don't track content of these folders
-someOtherfolder/
+Scripts/Alignment/Submit/
 
 
 # Compiled source #
 ###################
 *.err
 *.out
+*.gff3
+*.sh

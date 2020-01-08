@@ -1,0 +1,71 @@
+#!/bin/bash -login
+#SBATCH --time=00:30:00
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=2
+#SBATCH --mem-per-cpu=12G
+#SBATCH --job-name Samtools_Teresi
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+
+
+# -------------------------------
+# Load Modules
+module purge
+module load Anaconda2/4.2.0
+source activate HTSeq
+
+cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Output_Files/
+for seq_folder in *_Seq; do
+	if [ -d ${seq_folder} ]; then
+		# Will not run if no directories are available
+		echo "New Main Folder..."
+		echo $seq_folder
+		cd $seq_folder
+
+		for paired_folder in *gz; do
+			if [ -d ${paired_folder} ]; then
+				# Will not run if no directories are available
+				echo "New Sub Folder..."
+				echo $paired_folder
+				cd $paired_folder
+				cd Mapping
+				# Generate sorted sam files for HTSeq
+				# delete any leftover working files
+				rm -f *.err
+				rm -f *.tmp
+				rm -f *.tmp*
+				rm -f sorted_for_HTSeq.sam
+				echo "Running samtools..."
+				head -n 15 /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Scripts/HTSeq/SamTools_for_HTSeq_Teresi.sb > run_sam.sh
+				echo samtools sort Aligned.out.sam -n -@ 2 -o sorted_for_HTSeq.sam >> run_sam.sh
+				echo "Submit samtools script"
+				sbatch run_sam.sh
+				cd ../../
+				echo "$PWD"
+				echo ""
+			fi
+		done
+		
+		cd ../
+
+	fi
+done
+
+#cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Output_Files/724_Seq/
+#cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Output_Files/802_Seq/
+#cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Output_Files/809_Seq/
+
+
+
+
+
+#cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Scripts/HTSeq/
+
+
+
+
+
+# In regards to SAMTools, I need to have a sorted SAM file by read name
+#samtools sort $filename -n -o sorted_for_HTSeq.sam
+
+#htseq-count --format=sam --order=name --stranded=yes --type=exon --idattr=Parent --mode=union sorted_for_HTSeq.sam Vvinifera_145_gene_exons.gff3

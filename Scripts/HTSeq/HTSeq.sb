@@ -1,0 +1,48 @@
+#!/bin/bash -login
+#SBATCH --time=01:30:00
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=2
+#SBATCH --mem-per-cpu=12G
+#SBATCH --job-name HTSeq_Teresi
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+
+
+# -------------------------------
+# Load Modules
+module purge
+module load Anaconda2/4.2.0
+source activate HTSeq
+
+cd /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Output_Files/
+for seq_folder in *_Seq; do
+	if [ -d ${seq_folder} ]; then
+		# Will not run if no directories are available
+		echo "New Main Folder..."
+		echo $seq_folder
+		cd $seq_folder
+
+		for paired_folder in *gz; do
+			if [ -d ${paired_folder} ]; then
+				# Will not run if no directories are available
+				echo "New Sub Folder..."
+				echo $paired_folder
+				cd $paired_folder
+				cd Mapping
+				rm -f *Counts.txt
+				rm -f Results_HTSeq_Counts.count
+				head -n 15 /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Scripts/HTSeq/HTSeq.sb > run_htseq.sh
+				echo "htseq-count --format=sam --order=name --stranded=yes --type=exon --idattr=Parent --mode=union sorted_for_HTSeq.sam /mnt/research/edgerpat_lab/Scotty/Grape_RNA_Seq/Scripts/HTSeq/Vvinifera_145_gene_exons.gff3 > ${paired_folder}_Results_HTSeq_Counts.count" >> run_htseq.sh
+				echo "Submit htseq script"
+				sbatch run_htseq.sh
+				cd ../../
+				echo "$PWD"
+				echo ""
+			fi
+		done
+		
+		cd ../
+
+	fi
+done
+

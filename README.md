@@ -1,3 +1,5 @@
+Work in progress. I am currently tidying up my git tree and migrating my scripts over from the computing cluster
+
 # Project Design
 
 ## Project 1:

@@ -11,10 +11,10 @@ __author__ = "Scott Teresi"
 
 import pandas as pd
 input_tsvs = '/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/\
-EdgeR/Input/HTSeq_Output/'
+EdgeR/Input/HTSeq_Output/Unmodified/'
 
 input_GFF = '/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/\
-EdgeR/Input/Vvinifera_145_gene_exons.gff3'
+EdgeR/Input/HTSeq_Output/Unmodified/Vvinifera_145_gene_exons.gff3'
 
 # Load the data
 Seq_724 = pd.read_csv(input_tsvs + '724_Seq.tsv', header='infer', sep='\t')

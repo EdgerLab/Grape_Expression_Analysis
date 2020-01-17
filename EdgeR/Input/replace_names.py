@@ -4,7 +4,9 @@
 Replace the gene names. Go from PAC names to GSVIV names
 Utilize the gff file to replace. I can find the corresponding GSVIV name from
 the Name= identifier present on the mRNA lines. On the mRNA lines there is also
-the PAC ID so I should be able to easily match the two
+the PAC ID so I should be able to easily match the two.
+
+Once done, write out the new files with the correct names.
 """
 
 __author__ = "Scott Teresi"
@@ -48,10 +50,9 @@ GFF_Data[['GSVIV_ID', 'Nonsense_2']] = GFF_Data.GSVIV_ID.str.split(';pacid=',exp
 GFF_Data = GFF_Data.drop(['FullName', 'Nonsense_1', 'Nonsense_2'], axis = 1)
 
 my_dict = dict(zip(GFF_Data.PAC_ID, GFF_Data.GSVIV_ID))
-Seq_809.to_csv('Prior.csv')
+Seq_724.gene_id = Seq_724.gene_id.replace(to_replace = my_dict, value = None)
+Seq_802.gene_id = Seq_802.gene_id.replace(to_replace = my_dict, value = None)
 Seq_809.gene_id = Seq_809.gene_id.replace(to_replace = my_dict, value = None)
-Seq_809.to_csv('After.csv')
-
-
-print(GFF_Data.head())
-print(Seq_809.head())
+Seq_724.to_csv('HTSeq_Output/Modified/724_Seq_NamesReplaced.csv')
+Seq_802.to_csv('HTSeq_Output/Modified/802_Seq_NamesReplaced.csv')
+Seq_809.to_csv('HTSeq_Output/Modified/809_Seq_NamesReplaced.csv')

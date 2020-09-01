@@ -118,28 +118,28 @@ Filter_724_802 = function(input_data_724_802) {
   for (i in 1:ncol(my_data)) {
     if (grepl("W_C_*", colnames(my_data)[i])) {
       my_data[(nrow(my_data) - 1),i] <- "A_Control_Water"
-      my_data[(nrow(my_data)), i] <- "Control"
+      my_data[(nrow(my_data)), i] <- "WC"
       
       # GA and CK
     } else if (grepl("GA3_CK_C_*", colnames(my_data)[i])) {
-      my_data[(nrow(my_data) - 1),i] <- "C_GA_CK"
-      my_data[(nrow(my_data)), i] <- "Control"
+      my_data[(nrow(my_data) - 1),i] <- "Reference"
+      my_data[(nrow(my_data)), i] <- "GA3_CKC"
     } else if (grepl("GA3_[^CK_C]", colnames(my_data)[i])) {
       my_data[(nrow(my_data) - 1),i] <- "T_GA" 
-      my_data[(nrow(my_data)), i] <- "Treatment" 
+      my_data[(nrow(my_data)), i] <- "GA3" 
      
       # AUX 
     } else if (grepl("AUX_C_", colnames(my_data)[i])) {
-      my_data[(nrow(my_data) - 1),i] <- "C_AUX"
-      my_data[(nrow(my_data)), i] <- "Control"
+      my_data[(nrow(my_data) - 1),i] <- "AUX_C"
+      my_data[(nrow(my_data)), i] <- "AUXC"
     } else if (grepl("AUX_[^C]", colnames(my_data)[i])) {
-      my_data[(nrow(my_data) - 1),i] <- "T_AUX"
-      my_data[(nrow(my_data)), i] <- "Treatment"
+      my_data[(nrow(my_data) - 1),i] <- "AUX_no_C"
+      my_data[(nrow(my_data)), i] <- "AUX"
       
       # CK
     } else if (grepl("^CK_", colnames(my_data)[i])) {
-      my_data[(nrow(my_data) - 1),i] <- "T_CK" 
-      my_data[(nrow(my_data)), i] <- "Treatment"
+      my_data[(nrow(my_data) - 1),i] <- "NonReference" 
+      my_data[(nrow(my_data)), i] <- "CK"
     } 
   }
 # Update rows with "metadata" on each sample's identity
@@ -164,61 +164,71 @@ Filter_809 = function(input_data_809) {
     if (grepl("SB\\.C[^K](.*?)_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "C_Untransformed"
     my_data[(nrow(my_data) - 1), i] <- "Control_Region"
-    my_data[(nrow(my_data)), i] <- "C_No_Gall"
+    my_data[(nrow(my_data)), i] <- "SBC"
   } else if (grepl("SB\\.CK(.*?)G", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "C_Untransformed"
     my_data[(nrow(my_data) - 1), i] <- "Control_Region"
-    my_data[(nrow(my_data)), i] <- "Gall"
+    my_data[(nrow(my_data)), i] <- "SBCK"
   
-    # DPR   
-  } else if (grepl("DPR(.*?)G_S", colnames(my_data)[i])) {
+    # DPR1   
+  } else if (grepl("DPR\\.1(.*?)G_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "Empty_Vector"
-    my_data[(nrow(my_data)), i] <- "Gall"
-  } else if (grepl("DPR(.*?)[^G]_S*", colnames(my_data)[i])) {
+    my_data[(nrow(my_data)), i] <- "DPR1_Gall"
+  } else if (grepl("DPR\\.1(.*?)[^G]_S*", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "Empty_Vector"
-    my_data[(nrow(my_data)), i] <- "No_Gall"
+    my_data[(nrow(my_data)), i] <- "DPR1_NoGall"
+    
+    # DPR2   
+  } else if (grepl("DPR\\.2(.*?)G_S", colnames(my_data)[i])) {
+    my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
+    my_data[(nrow(my_data) - 1), i] <- "Empty_Vector"
+    my_data[(nrow(my_data)), i] <- "DPR2_Gall"
+  } else if (grepl("DPR\\.2(.*?)[^G]_S*", colnames(my_data)[i])) {
+    my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
+    my_data[(nrow(my_data) - 1), i] <- "Empty_Vector"
+    my_data[(nrow(my_data)), i] <- "DPR2_NoGall"
     
     # WUS Reg 1
   } else if (grepl("X1(.*?)G_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "WUS_Reg_1"
-    my_data[(nrow(my_data)), i] <- "Gall"
+    my_data[(nrow(my_data)), i] <- "WUS_Reg1_Gall"
   } else if (grepl("X1(.*?)[^G]_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "WUS_Reg_1"
-    my_data[(nrow(my_data)), i] <- "C_No_Gall"
+    my_data[(nrow(my_data)), i] <- "WUS_Reg1_NoGall"
 
     # WUS Reg 2
   } else if (grepl("X2(.*?)G_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "WUS_Reg_2"
-    my_data[(nrow(my_data)), i] <- "Gall"
+    my_data[(nrow(my_data)), i] <- "WUS_Reg2_Gall"
   } else if (grepl("X2(.*?)[^G]_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "WUS_Reg_2"
-    my_data[(nrow(my_data)), i] <- "C_No_Gall"
+    my_data[(nrow(my_data)), i] <- "WUS_Reg2_NoGall"
   
     # LFY Reg 1 
   } else if (grepl("X3(.*?)G_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "LFY_Reg_1"
-    my_data[(nrow(my_data)), i] <- "Gall"
+    my_data[(nrow(my_data)), i] <- "LFY_Reg1_Gall"
   } else if (grepl("X3(.*?)[^G]_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "LFY_Reg_1"
-    my_data[(nrow(my_data)), i] <- "No_Gall"
+    my_data[(nrow(my_data)), i] <- "LFY_Reg1_NoGall"
     
     # LFY Reg 2
   } else if (grepl("X4(.*?)G_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "LFY_Reg_2"
-    my_data[(nrow(my_data)), i] <- "Gall"
+    my_data[(nrow(my_data)), i] <- "LFY_Reg2_Gall"
   } else if (grepl("X4(.*?)[^G]_S", colnames(my_data)[i])) {
     my_data[(nrow(my_data) - 2),i] <- "T_Transformed"
     my_data[(nrow(my_data) - 1), i] <- "LFY_Reg_2"
-    my_data[(nrow(my_data)), i] <- "C_No_Gall"
+    my_data[(nrow(my_data)), i] <- "LFY_Reg2_NoGall"
   }  
   }
 # Update rows with "metadata" on each sample's identity
@@ -235,7 +245,7 @@ Here we are doing project 1, which includes the GA, CK, and AUX experiments
 ```{r GA_Compare, eval=TRUE}
 Filtered_724_802 = Filter_724_802(input_data_724_802)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_1')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_1')
 #-----------------------------------
 # Transformed vs. Untransformed
 # GA3_CK vs GA3
@@ -263,6 +273,7 @@ my_grouping = c(tail(Counts, 1)) # treatment vs control grouping declared
 Counts = head(Counts, -1) # drop Treatment row
 Counts = tail(Counts, -1) # drop Chemical row
 
+
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
 # We need the gene names for later
@@ -276,44 +287,43 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('GA3_CKC', 'GA3'))
 topTags = topTags(Fish_Exact)
-
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('GA3CK_vs_GA3_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "GA3CK vs. GA3")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('GA3CK_vs_GA3_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "GA3CK vs. GA3")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'GA3CK_vs_GA3_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'GA3CKC_vs_GA3_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 Trans_v_Untrans_Wus_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'GA3CK_vs_GA3_Direction.tsv')
+write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'GA3CKC_vs_GA3_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'GA3CK_vs_GA3_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'GA3CK_vs_GA3_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, GA3_Comparisons, simplified_DGE_frame)
+#rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, GA3_Comparisons, simplified_DGE_frame)
 ```
 
 ## Cytokinin comparisons
 ```{r CK_Compare, eval=TRUE}
 Filtered_724_802 = Filter_724_802(input_data_724_802)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_1')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_1')
 #-----------------------------------
 # Transformed vs. Untransformed
-# GA3_CK vs GA3
+# GA3_CK vs CK
 # The order is control vs treatment
 CK_Comparisons_Function = function(Filtered_724_802) {
   # Subset the Data
@@ -334,7 +344,10 @@ rm(GA3_CK, CK)
 # Make grouping for treatment groups.
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
+
+
 my_grouping = c(tail(Counts, 1)) # treatment vs control grouping declared
+
 Counts = head(Counts, -1) # drop Treatment row
 Counts = tail(Counts, -1) # drop Chemical row
 
@@ -343,7 +356,6 @@ x = rownames(Counts)
 # We need the gene names for later
 Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
 rm(x)
-
 Counts = apply(Counts, 2, as.numeric)
 D = DGEList(Counts, group = unlist(my_grouping))
 D = calcNormFactors(D)
@@ -351,41 +363,41 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('GA3_CKC', 'CK'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('GA3Ck_vs_CK_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "GA3Ck vs. CK")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('GA3Ck_vs_CK_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "GA3Ck vs. CK")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'GA3CK_vs_CK_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'GA3CKC_vs_CK_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 Trans_v_Untrans_Wus_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'GA3CK_vs_CK_Direction.tsv')
+write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'GA3CKC_vs_CK_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'GA3CK_vs_CK_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'GA3CK_vs_CK_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, CK_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, CK_Comparisons, simplified_DGE_frame)
 ```
 
 ## Auxin Comparisons
 ```{r AUX_Compare, eval=TRUE}
 Filtered_724_802 = Filter_724_802(input_data_724_802)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_1')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_1')
 #-----------------------------------
 # Control vs. Treatment
 # AUX_C vs AUX
@@ -402,8 +414,9 @@ AUX_C = AUX_Comparisons[[1]]
 AUX_T = AUX_Comparisons[[2]]
 
 # Specify how to merge
-Counts = merge(AUX_C, AUX_T, by = 'row.names')
+Counts = merge(AUX_T, AUX_C, by = 'row.names')
 rm(AUX_C, AUX_T)
+
 
 # Make grouping for treatment groups.
 rownames(Counts) <- Counts$Row.names
@@ -412,11 +425,13 @@ my_grouping = c(tail(Counts, 1)) # treatment vs control grouping declared
 Counts = head(Counts, -1) # drop Treatment row
 Counts = tail(Counts, -1) # drop Chemical row
 
+
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
 # We need the gene names for later
 Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
 rm(x)
+
 
 Counts = apply(Counts, 2, as.numeric)
 D = DGEList(Counts, group = unlist(my_grouping))
@@ -425,34 +440,34 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair=c('AUXC', 'AUX'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('AUX_C_vs_AUX_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "Auxin Control vs. Auxin Treatment")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('AUX_C_vs_AUX_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "Auxin Control vs. Auxin Treatment")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'AUX_C_vs_AUX_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'AUXC_vs_AUX_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 Trans_v_Untrans_Wus_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'AUX_C_vs_AUX_Direction.tsv')
+write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'AUXC_vs_AUX_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'AUX_C_vs_AUX_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'AUX_C_vs_AUX_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, AUX_Comparisons, simplified_DGE_frame)
+#rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, AUX_Comparisons, simplified_DGE_frame)
 ```
 
 # Project 2:
@@ -460,7 +475,7 @@ rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tb
 ```{r WUS1_NoGall, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 WUS1_No_Gall_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -479,10 +494,12 @@ Counts = merge(SB_C, WUS_Reg1_No_Gall, by = 'row.names')
 rm(SB_C, WUS_Reg1_No_Gall)
 
 # Make grouping for treatment groups.
-Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(tail(Counts, 1)) # transformed vs untransformed grouping declared
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+
+
+Counts = tail(Counts, -1) # drop Treatment row
 Counts = head(Counts, -2) # drop bottom two metadata row
 
 Counts = as.matrix.data.frame(Counts)
@@ -498,16 +515,16 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'WUS_Reg1_NoGall'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_WUS_Reg1_NoGall_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. WUSReg1 no Galls")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_WUS_Reg1_NoGall_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. WUSReg1 no Galls")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'SBC_vs_WUS_Reg1_NoGall_Summary.txt', quote = F, sep = '\t')
@@ -520,12 +537,12 @@ WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_fram
 write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_WUS_Reg1_NoGall_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_WUS_Reg1_NoGall_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_WUS_Reg1_NoGall_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, WUS_Reg1_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, WUS_Reg1_Comparisons, simplified_DGE_frame)
 ```
 
 
@@ -533,7 +550,7 @@ rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tb
 ```{r WUS2_NoGall, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 WUS2_No_Gall_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -552,10 +569,10 @@ Counts = merge(SB_C, WUS_Reg2_No_Gall, by = 'row.names')
 rm(SB_C, WUS_Reg2_No_Gall)
 
 # Make grouping for treatment groups.
-Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(tail(Counts, 1)) # transformed vs untransformed grouping declared
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
 Counts = head(Counts, -2) # drop bottom two metadata row
 
 Counts = as.matrix.data.frame(Counts)
@@ -571,16 +588,16 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'WUS_Reg2_NoGall'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_WUS_Reg2_NoGall_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. WUSReg2 no Galls")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_WUS_Reg2_NoGall_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. WUSReg2 no Galls")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'SBC_vs_WUS_Reg2_NoGall_Summary.txt', quote = F, sep = '\t')
@@ -593,19 +610,19 @@ WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_fram
 write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_WUS_Reg2_NoGall_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_WUS_Reg2_NoGall_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_WUS_Reg2_NoGall_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, WUS_Reg2_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, WUS_Reg2_Comparisons, simplified_DGE_frame)
 ```
 
 ## LFY1 vs SBC Comparisons
 ```{r LFY1_NoGall, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 LFY1_No_Gall_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -623,11 +640,10 @@ LFY_Reg1_No_Gall = LFY_Reg1_Comparisons[[2]]
 Counts = merge(SB_C, LFY_Reg1_No_Gall, by = 'row.names')
 rm(SB_C, LFY_Reg1_No_Gall)
 
-# Make grouping for treatment groups.
-Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(tail(Counts, 1)) # transformed vs untransformed grouping declared
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
 Counts = head(Counts, -2) # drop bottom two metadata row
 
 Counts = as.matrix.data.frame(Counts)
@@ -643,16 +659,16 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'LFY_Reg1_NoGall'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_LFY_Reg1_NoGall_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. LFYReg1 no Galls")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_LFY_Reg1_NoGall_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. LFYReg1 no Galls")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'SBC_vs_LFY_Reg1_NoGall_Summary.txt', quote = F, sep = '\t')
@@ -665,19 +681,19 @@ WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_fram
 write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_LFY_Reg1_NoGall_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_LFY_Reg1_NoGall_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_LFY_Reg1_NoGall_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, LFY_Reg1_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY_Reg1_Comparisons, simplified_DGE_frame)
 ```
 
 ## LFY2 vs SBC Comparisons
 ```{r LFY2_NoGall, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 LFY2_No_Gall_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -695,12 +711,14 @@ LFY_Reg2_No_Gall = LFY_Reg2_Comparisons[[2]]
 Counts = merge(SB_C, LFY_Reg2_No_Gall, by = 'row.names')
 rm(SB_C, LFY_Reg2_No_Gall)
 
-# Make grouping for treatment groups.
-Counts = Counts[-(1:2),]
+
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(tail(Counts, 1)) # transformed vs untransformed grouping declared
-Counts = head(Counts, -2) # drop extra
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -715,16 +733,16 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'LFY_Reg2_NoGall'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_LFY_Reg2_NoGall_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. LFYReg2 no Galls")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_LFY_Reg2_NoGall_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. LFYReg2 no Galls")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'SBC_vs_LFY_Reg2_NoGall_Summary.txt', quote = F, sep = '\t')
@@ -737,24 +755,101 @@ WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_fram
 write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_LFY_Reg2_NoGall_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_LFY_Reg2_NoGall_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_LFY_Reg2_NoGall_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, LFY_Reg2_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY_Reg2_Comparisons, simplified_DGE_frame)
 ```
 
 ## SBC vs DPR Comparisons
-```{r SBC_DPR, eval=TRUE}
+```{r SBC_DPR1, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 SBC_vs_DPR_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
   SB_C = select(Filtered_809, matches("SB\\.C[^K](.*?)_S"))
-  DPR = select(Filtered_809, matches("DPR(.*?)[^G]_S*"))
+  DPR = select(Filtered_809, matches("DPR\\.1(.*?)G_S*"))
+  SBC_vs_DPR_Comparisons = list(SB_C, DPR)
+  # Return list of subsetted data
+  return(SBC_vs_DPR_Comparisons)
+}
+SBC_vs_DPR_Comparisons = SBC_vs_DPR_Comparisons_Function(Filtered_809)
+SB_C = SBC_vs_DPR_Comparisons[[1]]
+DPR = SBC_vs_DPR_Comparisons[[2]]
+
+# Specify how to merge
+Counts = merge(SB_C, DPR, by = 'row.names')
+rm(SB_C, DPR)
+
+
+# Make grouping for treatment groups.
+rownames(Counts) <- Counts$Row.names
+Counts = subset(Counts, select = -c(Row.names))
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+
+
+
+Counts = as.matrix.data.frame(Counts)
+x = rownames(Counts)
+# We need the gene names for later
+Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
+rm(x)
+
+Counts = apply(Counts, 2, as.numeric)
+D = DGEList(Counts, group = unlist(my_grouping))
+D = calcNormFactors(D)
+D_Samples = D$samples
+
+D = estimateCommonDisp(D)
+D = estimateTagwiseDisp(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'DPR1_Gall'))
+topTags = topTags(Fish_Exact)
+
+# P = 0.05
+simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_DPR_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. DPR")
+#abline(h=c(0,10))
+#dev.off()
+
+# Write summary table
+write.table(summary(simplified_DGE), file = 'SBC_vs_DPR1_Gall_Summary.txt', quote = F, sep = '\t')
+
+# Write direction of differntial expression table
+simplified_DGE_frame = data.frame(simplified_DGE)
+colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
+row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
+WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_DPR1_Gall_Direction.tsv')
+
+# Write full output
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_DPR_Full.tsv')
+
+# Clear workspace
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, SBC_vs_DPR_Comparisons, simplified_DGE_frame)
+```
+
+
+## SBC vs DPR Comparisons
+```{r SBC_DPR2, eval=TRUE}
+Filtered_809 = Filter_809(input_data_809)
+# Switch to output folder
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
+#-----------------------------------
+SBC_vs_DPR_Comparisons_Function = function(Filtered_809) {
+  # Subset the Data
+  SB_C = select(Filtered_809, matches("SB\\.C[^K](.*?)_S"))
+  DPR = select(Filtered_809, matches("DPR\\.2(.*?)G_S*"))
   SBC_vs_DPR_Comparisons = list(SB_C, DPR)
   # Return list of subsetted data
   return(SBC_vs_DPR_Comparisons)
@@ -768,11 +863,14 @@ Counts = merge(SB_C, DPR, by = 'row.names')
 rm(SB_C, DPR)
 
 # Make grouping for treatment groups.
-Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(tail(Counts, 1)) # transformed vs untransformed grouping declared
-Counts = head(Counts, -2) # drop extra
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -787,42 +885,57 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'DPR2_Gall'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_DPR_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. DPR")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('SBC_vs_DPR_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. DPR")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'SBC_vs_DPR_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'SBC_vs_DPR2_Gall_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_DPR_Direction.tsv')
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_DPR2_Gall_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_DPR_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'SBC_vs_DPR_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, SBC_vs_DPR_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, SBC_vs_DPR_Comparisons, simplified_DGE_frame)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Non-Priority Comparisons
 Compare AUX_C vs W_C
 ```{r AUXC_WC_Compare, eval=TRUE}
 Filtered_724_802 = Filter_724_802(input_data_724_802)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_1')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_1')
 #-----------------------------------
 # The order is control vs treatment
 AUX_WC_Comparisons_Function = function(Filtered_724_802) {
@@ -844,9 +957,11 @@ rm(WC, AUX_C)
 # Make grouping for treatment groups.
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(head(Counts, 1)) # treatment vs control grouping declared
+my_grouping = c(tail(Counts, 1)) # treatment vs control grouping declared
 Counts = head(Counts, -1) # drop Treatment row
 Counts = tail(Counts, -1) # drop Chemical row
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -861,16 +976,16 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('WC', 'AUXC'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('WC_vs_AUX_C_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "WC vs. AUX_C")
-abline(h=c(0,10))
-dev.off()
+#my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
+#jpeg('WC_vs_AUX_C_Smear.png')
+#plotSmear(Fish_Exact, de.tags=my_test, main = "WC vs. AUX_C")
+#abline(h=c(0,10))
+#dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'WC_vs_AUX_C_Summary.txt', quote = F, sep = '\t')
@@ -883,12 +998,12 @@ Trans_v_Untrans_Wus_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_
 write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'WC_vs_AUX_C_Direction.tsv')
 
 # Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'WC_vs_AUX_C_Full.tsv')
+#row.names(Fish_Exact) = Gene_Row_Key$Gene
+#Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
+#write_tsv(Fish_tbl, 'WC_vs_AUX_C_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, AUX_WC_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, AUX_WC_Comparisons, simplified_DGE_frame)
 ```
 
 # Non-Priority Comparisons
@@ -896,7 +1011,7 @@ Compare GA3_CK vs W_C
 ```{r WC_GA3CK_Compare, eval=TRUE}
 Filtered_724_802 = Filter_724_802(input_data_724_802)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_1')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_1')
 #-----------------------------------
 # The order is control vs treatment
 WC_GA3CK_Comparisons_Function = function(Filtered_724_802) {
@@ -918,9 +1033,11 @@ rm(WC, GA3CK)
 # Make grouping for treatment groups.
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(head(Counts, 1)) # treatment vs control grouping declared
+my_grouping = c(tail(Counts, 1)) # treatment vs control grouping declared
 Counts = head(Counts, -1) # drop Treatment row
 Counts = tail(Counts, -1) # drop Chemical row
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -935,16 +1052,11 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair = c('WC', 'GA3_CKC'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('WC_vs_GA3CK_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "WC vs. GA3CK")
-abline(h=c(0,10))
-dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'WC_vs_GA3CK_Summary.txt', quote = F, sep = '\t')
@@ -956,13 +1068,8 @@ row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 Trans_v_Untrans_Wus_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
 write_tsv(Trans_v_Untrans_Wus_SBC_Direction, 'WC_vs_GA3CK_Direction.tsv')
 
-# Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'WC_vs_GA3CK_Full.tsv')
-
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, WC_GA3CK_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, WC_GA3CK_Comparisons, simplified_DGE_frame)
 ```
 
 # Project 2 Non-Primary
@@ -977,7 +1084,7 @@ DPR-G vs. DPR
 ```{r SBC_SBCK, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 SBC_vs_SBCK_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -1017,16 +1124,11 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair=c('SBC', 'SBCK'))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('SBC_vs_SBCK_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "SBC vs. SBCK")
-abline(h=c(0,10))
-dev.off()
 
 # Write summary table
 write.table(summary(simplified_DGE), file = 'SBC_vs_SBCK_Summary.txt', quote = F, sep = '\t')
@@ -1038,13 +1140,9 @@ row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
 write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_SBCK_Direction.tsv')
 
-# Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'SBC_vs_SBCK_Full.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, SBC_vs_SBCK_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, SBC_vs_SBCK_Comparisons, simplified_DGE_frame)
 ```
 
 
@@ -1052,7 +1150,7 @@ rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tb
 ```{r WUS1_WUS1G, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 WUS1_vs_WUS1G_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -1070,13 +1168,17 @@ WUS1G = WUS1_vs_WUS1G_Comparisons[[2]]
 Counts = merge(WUS1, WUS1G, by = 'row.names')
 rm(WUS1, WUS1G)
 
+
 # Make grouping for treatment groups.
-#Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(head(Counts, 1)) # galls
-Counts = tail(Counts, -1) # drop extra
-Counts = head(Counts, -2) # drop extra
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -1091,34 +1193,24 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair=c("WUS_Reg1_NoGall", "WUS_Reg1_Gall"))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('WUS1_vs_WUS1G_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "WUS1 vs. WUS1G")
-abline(h=c(0,10))
-dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'WUS_vs_WUS1G_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'WUS1NoGall_vs_WUS1G_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'WUS_vs_WUS1G_Direction.tsv')
-
-# Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'WUS1_vs_WUS1G_Full.tsv')
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'WUS1NoGall_vs_WUS1G_Direction.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, WUS1_vs_WUS1G_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, WUS1_vs_WUS1G_Comparisons, simplified_DGE_frame)
 ```
 
 
@@ -1126,7 +1218,7 @@ rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tb
 ```{r LFY1_LFY1G, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 LFY1_vs_LFY1G_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -1145,12 +1237,11 @@ Counts = merge(LFY1, LFY1G, by = 'row.names')
 rm(LFY1, LFY1G)
 
 # Make grouping for treatment groups.
-#Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(head(Counts, 1)) # galls
-Counts = tail(Counts, -1) # drop extra
-Counts = head(Counts, -2) # drop extra
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -1165,34 +1256,24 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair=c("LFY_Reg1_NoGall", "LFY_Reg1_Gall"))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('LFY1_vs_LFY1G_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "LFY1 vs. LFY1G")
-abline(h=c(0,10))
-dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'LFY1_vs_LFY1G_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'LFY1NoGall_vs_LFY1G_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 LFY1_LFY1G_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(LFY1_LFY1G_Direction, 'LFY1_vs_LFY1G_Direction.tsv')
-
-# Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'LFY1_vs_LFY1G_Full.tsv')
+write_tsv(LFY1_LFY1G_Direction, 'LFY1NoGall_vs_LFY1G_Direction.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, LFY1_vs_LFY1G_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY1_vs_LFY1G_Comparisons, simplified_DGE_frame)
 ```
 
 
@@ -1201,7 +1282,7 @@ rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tb
 ```{r LFY2_LFY2G, eval=TRUE}
 Filtered_809 = Filter_809(input_data_809)
 # Switch to output folder
-setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/Project_2')
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
 #-----------------------------------
 LFY2_vs_LFY2G_Comparisons_Function = function(Filtered_809) {
   # Subset the Data
@@ -1220,12 +1301,13 @@ Counts = merge(LFY2, LFY2G, by = 'row.names')
 rm(LFY2, LFY2G)
 
 # Make grouping for treatment groups.
-#Counts = Counts[-(1:2),]
 rownames(Counts) <- Counts$Row.names
 Counts = subset(Counts, select = -c(Row.names))
-my_grouping = c(head(Counts, 1)) # galls
-Counts = tail(Counts, -1) # drop extra
-Counts = head(Counts, -2) # drop extra
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+
 
 Counts = as.matrix.data.frame(Counts)
 x = rownames(Counts)
@@ -1240,32 +1322,227 @@ D_Samples = D$samples
 
 D = estimateCommonDisp(D)
 D = estimateTagwiseDisp(D)
-Fish_Exact = exactTest(D)
+Fish_Exact = exactTest(D, pair=c("LFY_Reg2_NoGall", "LFY_Reg2_Gall"))
 topTags = topTags(Fish_Exact)
 
 # P = 0.05
 simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
-my_test = rownames(Fish_Exact)[as.logical(simplified_DGE)]
-jpeg('LFY2_vs_LFY2G_Smear.png')
-plotSmear(Fish_Exact, de.tags=my_test, main = "LFY2 vs. LFY2G")
-abline(h=c(0,10))
-dev.off()
 
 # Write summary table
-write.table(summary(simplified_DGE), file = 'LFY2_vs_LFY2G_Summary.txt', quote = F, sep = '\t')
+write.table(summary(simplified_DGE), file = 'LFY2NoGall_vs_LFY2G_Summary.txt', quote = F, sep = '\t')
 
 # Write direction of differntial expression table
 simplified_DGE_frame = data.frame(simplified_DGE)
 colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
 row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
 LFY2_LFY2G_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
-write_tsv(LFY2_LFY2G_Direction, 'LFY2_vs_LFY2G_Direction.tsv')
-
-# Write full output
-row.names(Fish_Exact) = Gene_Row_Key$Gene
-Fish_tbl = as_tibble(rownames_to_column(Fish_Exact$table, var = 'Gene_Name'))
-write_tsv(Fish_tbl, 'LFY2_vs_LFY2G_Full.tsv')
+write_tsv(LFY2_LFY2G_Direction, 'LFY2NoGall_vs_LFY2G_Direction.tsv')
 
 # Clear workspace
-rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, Fish_tbl, LFY2_vs_LFY2G_Comparisons, simplified_DGE_frame)
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY2_vs_LFY2G_Comparisons, simplified_DGE_frame)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# LFY1 and 2 Galls vs SBC
+```{r LFY1_Gall, eval=TRUE}
+Filtered_809 = Filter_809(input_data_809)
+# Switch to output folder
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
+#-----------------------------------
+LFY1_Gall_Comparisons_Function = function(Filtered_809) {
+  # Subset the Data
+  SB_C = select(Filtered_809, matches("SB\\.C[^K](.*?)_S"))
+  LFY_Reg1_Gall =  select(Filtered_809, matches("X3(.*?)G_S"))
+  LFY_Reg1_Comparisons = list(SB_C, LFY_Reg1_Gall)
+  # Return list of subsetted data
+  return(LFY_Reg1_Comparisons)
+}
+LFY_Reg1_Comparisons = LFY1_Gall_Comparisons_Function(Filtered_809)
+SB_C = LFY_Reg1_Comparisons[[1]]
+LFY_Reg1_Gall = LFY_Reg1_Comparisons[[2]]
+
+# Specify how to merge
+Counts = merge(SB_C, LFY_Reg1_Gall, by = 'row.names')
+rm(SB_C, LFY_Reg1_Gall)
+
+rownames(Counts) <- Counts$Row.names
+Counts = subset(Counts, select = -c(Row.names))
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+Counts = as.matrix.data.frame(Counts)
+x = rownames(Counts)
+# We need the gene names for later
+Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
+rm(x)
+
+Counts = apply(Counts, 2, as.numeric)
+D = DGEList(Counts, group = unlist(my_grouping))
+D = calcNormFactors(D)
+D_Samples = D$samples
+
+D = estimateCommonDisp(D)
+D = estimateTagwiseDisp(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'LFY_Reg1_Gall'))
+topTags = topTags(Fish_Exact)
+
+# P = 0.05
+simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
+
+# Write summary table
+write.table(summary(simplified_DGE), file = 'SBC_vs_LFY_Reg1_Gall_Summary.txt', quote = F, sep = '\t')
+
+# Write direction of differntial expression table
+simplified_DGE_frame = data.frame(simplified_DGE)
+colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
+row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
+WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_LFY_Reg1_Gall_Direction.tsv')
+
+
+# Clear workspace
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY_Reg1_Comparisons, simplified_DGE_frame)
+```
+
+
+
+# LFY1 and 2 Galls vs SBC
+```{r LFY2_Gall, eval=TRUE}
+Filtered_809 = Filter_809(input_data_809)
+# Switch to output folder
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
+#-----------------------------------
+LFY2_Gall_Comparisons_Function = function(Filtered_809) {
+  # Subset the Data
+  SB_C = select(Filtered_809, matches("SB\\.C[^K](.*?)_S"))
+  LFY_Reg2_Gall =  select(Filtered_809, matches("X4(.*?)G_S"))
+  LFY_Reg2_Comparisons = list(SB_C, LFY_Reg2_Gall)
+  # Return list of subsetted data
+  return(LFY_Reg2_Comparisons)
+}
+LFY_Reg2_Comparisons = LFY2_Gall_Comparisons_Function(Filtered_809)
+SB_C = LFY_Reg2_Comparisons[[1]]
+LFY_Reg2_Gall = LFY_Reg2_Comparisons[[2]]
+
+# Specify how to merge
+Counts = merge(SB_C, LFY_Reg2_Gall, by = 'row.names')
+rm(SB_C, LFY_Reg2_Gall)
+
+rownames(Counts) <- Counts$Row.names
+Counts = subset(Counts, select = -c(Row.names))
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+Counts = as.matrix.data.frame(Counts)
+x = rownames(Counts)
+# We need the gene names for later
+Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
+rm(x)
+
+Counts = apply(Counts, 2, as.numeric)
+D = DGEList(Counts, group = unlist(my_grouping))
+D = calcNormFactors(D)
+D_Samples = D$samples
+
+D = estimateCommonDisp(D)
+D = estimateTagwiseDisp(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'LFY_Reg2_Gall'))
+topTags = topTags(Fish_Exact)
+
+# P = 0.05
+simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
+
+# Write summary table
+write.table(summary(simplified_DGE), file = 'SBC_vs_LFY_Reg2_Gall_Summary.txt', quote = F, sep = '\t')
+
+# Write direction of differntial expression table
+simplified_DGE_frame = data.frame(simplified_DGE)
+colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
+row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
+WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_LFY_Reg2_Gall_Direction.tsv')
+
+
+# Clear workspace
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, LFY_Reg2_Comparisons, simplified_DGE_frame)
+```
+
+
+## WUS1 vs SBC Comparisons
+```{r WUS1_Gall, eval=TRUE}
+Filtered_809 = Filter_809(input_data_809)
+# Switch to output folder
+setwd('/home/scott/Documents/Uni/Research/Projects/Grape_RNA_Seq_Expression_Analysis/EdgeR/Output/test/Project_2')
+#-----------------------------------
+WUS1_Gall_Comparisons_Function = function(Filtered_809) {
+  # Subset the Data
+  SB_C = select(Filtered_809, matches("SB\\.C[^K](.*?)_S"))
+  WUS_Reg1_Gall =  select(Filtered_809, matches("X1(.*?)G_S"))
+  WUS_Reg1_Comparisons = list(SB_C, WUS_Reg1_Gall)
+  # Return list of subsetted data
+  return(WUS_Reg1_Comparisons)
+}
+WUS_Reg1_Comparisons = WUS1_Gall_Comparisons_Function(Filtered_809)
+SB_C = WUS_Reg1_Comparisons[[1]]
+WUS_Reg1_Gall = WUS_Reg1_Comparisons[[2]]
+
+# Specify how to merge
+Counts = merge(SB_C, WUS_Reg1_Gall, by = 'row.names')
+rm(SB_C, WUS_Reg1_Gall)
+
+# Make grouping for treatment groups.
+rownames(Counts) <- Counts$Row.names
+Counts = subset(Counts, select = -c(Row.names))
+my_grouping = c(head(Counts, 1)) # transformed vs untransformed grouping declared
+
+
+Counts = tail(Counts, -1) # drop Treatment row
+Counts = head(Counts, -2) # drop bottom two metadata row
+
+Counts = as.matrix.data.frame(Counts)
+x = rownames(Counts)
+# We need the gene names for later
+Gene_Row_Key = data.frame("Num"=rownames(as.data.frame(x)),"Gene"=x)
+rm(x)
+
+Counts = apply(Counts, 2, as.numeric)
+D = DGEList(Counts, group = unlist(my_grouping))
+D = calcNormFactors(D)
+D_Samples = D$samples
+
+D = estimateCommonDisp(D)
+D = estimateTagwiseDisp(D)
+Fish_Exact = exactTest(D, pair = c('SBC', 'WUS_Reg1_Gall'))
+topTags = topTags(Fish_Exact)
+
+# P = 0.05
+simplified_DGE = decideTestsDGE(Fish_Exact, p=0.05, adjust="BH")
+
+# Write summary table
+write.table(summary(simplified_DGE), file = 'SBC_vs_WUS_Reg1_Gall_Summary.txt', quote = F, sep = '\t')
+
+# Write direction of differntial expression table
+simplified_DGE_frame = data.frame(simplified_DGE)
+colnames(simplified_DGE_frame) = 'Direction_Differentially_Regulated'
+row.names(simplified_DGE_frame) = Gene_Row_Key$Gene
+WUS_Reg1_NoGall_SBC_Direction = as_tibble(rownames_to_column(simplified_DGE_frame, var = 'Gene_Name'))
+write_tsv(WUS_Reg1_NoGall_SBC_Direction, 'SBC_vs_WUS_Reg1_Gall_Direction.tsv')
+
+# Clear workspace
+rm(Gene_Row_Key, D, D_Samples, Fish_Exact, my_grouping, Counts, topTags, WUS_Reg1_Comparisons, simplified_DGE_frame)
 ```

@@ -1,5 +1,6 @@
 # Don't track content of these folders
 Scripts/Alignment/Submit/
+Output/
 
 
 # Compiled source #

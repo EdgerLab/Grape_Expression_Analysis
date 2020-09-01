@@ -1,4 +1,0 @@
-Transformed+Untransformed
-Down	293
-NotSig	21001
-Up	142

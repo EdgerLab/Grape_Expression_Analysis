@@ -1,4 +1,0 @@
-Control+Treatment
-Down	85
-NotSig	20448
-Up	69
